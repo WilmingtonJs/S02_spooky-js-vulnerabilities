@@ -1,0 +1,175 @@
+<html>
+<head>
+	<link rel="stylesheet" href="lib/reveal/css/reveal.css">
+	<link rel="stylesheet" href="lib/reveal/css/theme/night.css">
+	<link href="https://fonts.googleapis.com/css?family=Creepster" rel="stylesheet">
+	<link rel="stylesheet" href="assets/styles/main.css">
+	<link rel="stylesheet" href="assets/styles/spider.css">
+</head>
+<body>
+	<div class="reveal">
+		<div class="slides">
+			<section>
+				<h1 class="title">Spooky Javascript Vulnerabilities</h1>
+				<h4>WilmingtonJS <span class="orange">-</span> 10/30/2018</h4>
+				<h4>Tucker Watson</h4>
+				<div class="container">
+					<div class="left">
+						<div class="uno"><div class="uno"><div class="uno"><div class="uno"></div></div></div></div>
+						<div class="dos"><div class="dos"><div class="dos"><div class="dos"></div></div></div></div>
+						<div class="tres"><div class="tres"><div class="tres"><div class="tres"></div></div></div></div>
+						<div class="cuatro"><div class="cuatro"><div class="cuatro"><div class="cuatro"></div></div></div></div>
+					</div>
+					<div class="right">
+						<div class="uno"><div class="uno"><div class="uno"><div class="uno"></div></div></div></div>
+						<div class="dos"><div class="dos"><div class="dos"><div class="dos"></div></div></div></div>
+						<div class="tres"><div class="tres"><div class="tres"><div class="tres"></div></div></div></div>
+						<div class="cuatro"><div class="cuatro"><div class="cuatro"><div class="cuatro"></div></div></div></div>
+					</div>
+				</div>
+			</section>
+			<section>
+				<img style="height: 65vh;" src="assets/mummy.jpg">
+			</section>
+			<section>
+				<h2 class="header">Summary</h2>
+				<ul>
+					<div class="fragment">
+						<li>Cross Site Scripting (XSS)</li>
+						<ul>
+							<li>What is it?</li>
+							<li>Example Attacks</li>
+							<li>How do I protect myself?</li>
+						</ul>
+					</div>
+					<div class="fragment" style="padding-top:15px;">
+						<li>Cross Site Request Forgery (CSRF)</li>
+						<ul>
+							<li>What is it?</li>
+							<li>Example Attacks</li>
+							<li>How do I protect myself?</li>
+						</ul>
+					</div>
+				</ul>														
+			</ul>
+		</section>
+		<section>
+			<section>
+				<h2 class="header">What is XSS?</h2>				
+				<blockquote>Cross-site scripting (XSS) is a security bug that can affect websites. XSS can allow an attacker to add their own malicious JavaScript code onto the HTML pages displayed to your users. Once executed by the victim's browser, this code could then perform actions such as completely changing the behavior or appearance of the website, stealing private data, or performing actions on behalf of the user.</blockquote>	
+			</section>
+			<section>
+				<h2 class="header">XSS is basically Hollow Man</h2>				
+				<iframe src="https://giphy.com/embed/MSuwdCFMCxTeE" width="480" height="270" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+			</section>
+			<section>
+				<h2 class="header">XSS - Stored</h2>
+				<iframe width="650" height="450" src="https://xss-doc.appspot.com/demo/1"></iframe>				
+			</section>
+			<section>
+				<h2 class="header">XSS - Reflected</h2>
+				<p><a href="https://xss-doc.appspot.com/demo/2">Demo</a></p>		
+			</section>
+			<section>
+				<h2 class="header">XSS - DOM</h2>
+				<ul>
+					<li class="fragment">Also known as client-side XSS</li>
+					<li class="fragment">Payload lives fully on, not server</li>
+				</ul>
+			</section>
+			<section>
+				<h2 class="header">XSS Prevention</h2>
+				<ul>
+					<li class="fragment">Validate all user provided content</li>
+					<li class="fragment">Encode data before inserting</li>
+						<ul class="fragment">
+							<li class="code-example"><span>&#x3C;b&#x3E;hello&#x3C;/b&#x3E;</span> == <span>&#x26;#x3C;b&#x26;#x3E;hello&#x26;#x3C;/b&#x26;#x3E;</span></li>
+						</ul>
+					<li class="fragment">Sanitize using <strong>proven</strong> library</li>
+					<li class="fragment">Use modern frameworks when possible</li>
+					<li class="fragment">HttpOnly flag to prevent session hijacking</li>
+				</ul>
+			</section>
+		</section>
+		<section>
+			<section>
+				<h2 class="header">What is CSRF?</h2>
+				<blockquote>Cross-Site Request Forgery (CSRF) is an attack that forces an end user to execute unwanted actions on a web application in which they're currently authenticated. </blockquote>
+			</section>
+			<section>
+				<h2 class="header">CSRF Overview</h2>
+				<ul>
+					<li class="fragment">CSRF attacks typically <i>targeted</i> - specific website, endpoint, user</li>
+					<li class="fragment">Attacker cannot read responses - endpoints must be state-changing</li>
+					<li class="fragment">Requirements</li>
+					<ol>
+						<li class="fragment">Web Application must use cookie based authentication</li>
+						<li class="fragment">User (victim) must be logged in to target website</li>
+						<li class="fragment">User must click on malicious link</li>
+					</ol>
+				</ul>
+			</section>
+			<section>
+				<h2 class="header">How does it work?</h2>
+				<div style="background: #ffffff">
+					<img src="assets/csrf-example.png">
+				</div>
+			</section>
+			<section>
+				<h2 class="header">CSRF is basically Village of the Damned</h2>
+				<iframe src="https://giphy.com/embed/143x5yzAGU8Pjq" width="480" height="204" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+			</section>
+			<section>
+				<h2 class="header">Demo</h2>
+				<ul>
+					<li><a href="http://crackme.cenzic.com/kelev/view/home.php">Crack Me Bank</a></li>
+					<li><a href="http://localhost:8081/csrf">Malicious Website</a></li>
+				</ul>
+			</section>
+			<section>
+				<h2 class="header">CSRF Prevention</h2>
+				<ul>
+					<li class="fragment">Token based mitigation</li>
+					<li class="fragment">Compare target and source headers</li>
+					<li class="fragment">Use Same-Site Cookie Attribute</li>				
+				</ul>
+			</section>	
+		</section>
+		<section>
+			<h2 class="header">Thank you for coming! 🎃</h2>
+		</section>
+		<section>
+			<h2 class="header">Helpful Links</h2>
+			<ul>
+				<li><a href="https://www.owasp.org/index.php/Main_Page">OWASP</a> - Open Web Application Security Project</li>
+				<li><a href="https://www.owasp.org/index.php/XSS_(Cross_Site_Scripting)_Prevention_Cheat_Sheet">XSS Prevention Cheatsheet</a></li>
+				<li><a href="https://www.owasp.org/index.php/Cross-Site_Request_Forgery_(CSRF)_Prevention_Cheat_Sheet">CSRF Prevention Cheatsheet</a></li>
+			</ul>
+		</section>
+		<section>
+			<h2 class="header">References</h2>
+			<ul>
+				<li>Spider: Marco Barría, @fixcl</li>
+				<a href="https://codepen.io/fixcl/pen/hvKrH">https://codepen.io/fixcl/pen/hvKrH</a>
+				<li>CSRF Diagram: Charithra Kariyawasam</li>
+				<a href="https://medium.com/@charithra/introduction-to-csrf-a329badfca49">https://medium.com/@charithra/introduction-to-csrf-a329badfca49</a>
+				<li>XSS Demos: Google</li>
+				<a href="https://www.google.com/about/appsecurity/">https://www.google.com/about/appsecurity/</a>
+				<li>Crack Me Bank</li>
+				<a href="http://crackme.cenzic.com/kelev/view/home.php">http://crackme.cenzic.com/kelev/view/home.php</a>
+			</ul>
+		</section>	
+	</div>
+</div>
+<script src="lib/reveal/js/reveal.js"></script>
+<script src="lib/reveal/lib/js/head.min.js"></script>
+<script>
+	Reveal.initialize({
+		transition: 'slide',
+		dependencies: [
+			{ src: './lib/reveal/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+		],
+	});
+</script>
+</body>
+</html>
